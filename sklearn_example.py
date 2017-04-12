@@ -49,7 +49,7 @@ def rfccv(n_estimators, min_samples_split, max_features):
     ).mean()
     return val
 
-def main(k_num):
+def main(k_num, acq):
     gp_params = {"alpha": 1e-5}
     svcBO = BayesianOptimization(svccv,
                                  {'C': (0.001, 100), 'gamma': (0.0001, 0.1)},
@@ -65,7 +65,7 @@ def main(k_num):
     )
     """
 
-    svcBO.maximize(n_iter=10, **gp_params)
+    svcBO.maximize(n_iter=10, acq=acq, **gp_params)
     #print('-' * 53)
     #rfcBO.maximize(n_iter=10, **gp_params)
 
@@ -73,11 +73,14 @@ def main(k_num):
     print('Final Results')
     print('kernel: {}'.format(str(svcBO.kernel)))
     print('SVC: %f' % svcBO.res['max']['max_val'])
+    #print('RFC: %f' % rfcBO.res['max']['max_val'])
     print('best_parameter: ')
     print(svcBO.res['max']['max_params'])
-    #print('RFC: %f' % rfcBO.res['max']['max_val'])
+    print('acquisition function')
+    print(svcBO.acquisition)
 
     final_result = {"kernel": str(svcBO.kernel),
+                    "acquisition": svcBO.acquisition,
                     "value": svcBO.res['max']['max_val']}
 
     final_result.update(svcBO.res['max']['max_params'])

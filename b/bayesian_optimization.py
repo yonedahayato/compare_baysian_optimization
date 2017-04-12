@@ -87,6 +87,9 @@ class BayesianOptimization(object):
         # Verbose
         self.verbose = verbose
 
+        # acquisition function
+        self.acquisition = None
+
     def init(self, init_points):
         """
         Initialization method to kick start the optimization process. It is a
@@ -265,6 +268,7 @@ class BayesianOptimization(object):
         self.plog.reset_timer()
 
         # Set acquisition function
+        self.acquisition = acq
         self.util = UtilityFunction(kind=acq, kappa=kappa, xi=xi)
 
         # Initialize x, y and find current y_max
