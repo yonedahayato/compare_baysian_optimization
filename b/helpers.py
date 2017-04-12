@@ -171,6 +171,7 @@ class PrintLog(object):
         self.last_round = datetime.now()
 
     def print_header(self, initialization=True):
+	#header
 
         if initialization:
             print("{}Initialization{}".format(BColours.RED,
