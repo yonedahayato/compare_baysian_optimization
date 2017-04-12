@@ -6,21 +6,24 @@ def main():
     result = []
     for i in range(4):
         result.append(compare_kernel(i))
-        if i==2: break
 
 
-    print("-"*50)
+    print("-"*100)
     category = []
-    for k in result[0].keys():
+    category_size=[35,15,15,15]
+
+    for i, k in enumerate(result[0].keys()):
         category.append(k)
-        print("\t{}\t".format(k), end="|")
+        print("{0:>{1}}".format(k,category_size[i]), end="|")
     print("")
 
     for r in result:
-        for c in category:
-            print(r[c], end="|")
+        for i, c in enumerate(category):
+            if isinstance(r[c], str):
+                print("{0:>{1}}".format(r[c], category_size[i]),end="|")
+            else:
+                print("{0:>{1}.{2}f}".format(r[c], category_size[i], 5,5),end="|")
         print("")
-
 
 
 if __name__ == "__main__":
