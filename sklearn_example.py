@@ -11,6 +11,7 @@ from sklearn.svm import SVC
 #from bayes_opt import BayesianOptimization
 import sys
 from b.bayesian_optimization import BayesianOptimization
+from collections import OrderedDict
 
 """
 # Load data set and target values
@@ -79,9 +80,9 @@ def main(k_num, acq):
     print('acquisition function')
     print(svcBO.acquisition)
 
-    final_result = {"kernel": str(svcBO.kernel),
-                    "acquisition": svcBO.acquisition,
-                    "value": svcBO.res['max']['max_val']}
+    final_result = OrderedDict( (("kernel", str(svcBO.kernel)),
+                                 ("acquisition", svcBO.acquisition),
+                                 ("value", svcBO.res['max']['max_val'])) )
 
     final_result.update(svcBO.res['max']['max_params'])
     return final_result
