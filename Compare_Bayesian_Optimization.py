@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from sklearn_example import main as compare_kernel
-# from sklearn_MLP import main as compare_kernel
+# from sklearn_example import main as compare_kernel
+from sklearn_MLP import main as compare_kernel
 
 def main():
     result = []

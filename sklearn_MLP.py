@@ -2,9 +2,10 @@
 
 from sklearn import datasets
 from sklearn.neural_network import MLPClassifier
-import b.bayesian_optimization import BayesianOptimization
+from b.bayesian_optimization import BayesianOptimization
 
 import sys
+from collections import OrderedDict
 
 #data
 digits = datasets.load_digits()
@@ -12,7 +13,7 @@ n_sample = len(digits.images)
 X = digits.images.reshape((n_sample, -1))
 y = digits.target
 
-def MLP(alpha):
+def MLP(alpha, lr):
     # alpha ... L2 penalty
     # lr ... learning_rate
     mlp = MLPClassifier(hidden_layer_sizes=(100, 100, 100, 100, 100),
@@ -29,11 +30,11 @@ def MLP(alpha):
 
 def main(k_num, acq):
     gp_params = {"alpha": 1e-5}
-    BO = BayesianOptimization(MPL,
+    BO = BayesianOptimization(MLP,
                               {"alpha": (1e-8, 1e-4), "lr": (1e-6, 1e-2)},
                               verbose=1,kernel_num = k_num)
     BO.explore({"alpha": [1e-8, 1e-8, 1e-4, 1e-4],
-                "lr": [1e-6, 1e-2, le-6, le-2]})
+                "lr": [1e-6, 1e-2, 1e-6, 1e-2]})
 
     BO.maximize(n_iter=10, acq=acq, **gp_params)
 
@@ -45,6 +46,11 @@ def main(k_num, acq):
     print(BO.res["max"]["max_params"])
     print("acquisition function")
     print(BO.acquisition)
+
+    final_result = OrderedDict( (("kernel", str(BO.kernel)),
+                                 ("acquisition", BO.acquisition),
+                                 ("value", BO.res['max']['max_val'])) )
+
 
     final_result.update(BO.res["max"]["max_params"])
     return final_result
