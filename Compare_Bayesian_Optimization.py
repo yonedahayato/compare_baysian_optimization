@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from sklearn_example import main as compare_kernel
+# from sklearn_MLP import main as compare_kernel
 
 def main():
     result = []
     for i in range(4):
-        result.append(compare_kernel(i))
+        for acq in ["ucb", "ei", "poi"]:
+            result.append(compare_kernel(i, acq))
 
 
     print("-"*100)
     category = []
-    category_size=[35,15,15,15]
+    category_size=[35,15,15,15,15]
 
     for i, k in enumerate(result[0].keys()):
         category.append(k)
