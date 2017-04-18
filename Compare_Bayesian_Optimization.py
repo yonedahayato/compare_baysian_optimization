@@ -8,10 +8,8 @@ def main():
     for i in range(4):
         for acq in ["ucb", "ei", "poi"]:
             result.append(compare_kernel(i, acq))
-        break
 
-
-    print("-"*100)
+    print("-"*170)
     category = []
     category_size=[35] + [13]*(len(result[0])-1)
 
