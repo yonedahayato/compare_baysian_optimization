@@ -22,6 +22,9 @@ class BayesianOptimization(object):
         :param verbose:
             Whether or not to print progress.
 
+        :kernel_num:
+            kind of kernel
+
         """
         # Store the original dictionary
         self.pbounds = pbounds
@@ -268,7 +271,7 @@ class BayesianOptimization(object):
         self.plog.reset_timer()
 
         # Set acquisition function
-        self.acquisition = acq
+        self.acquisition = acq 
         self.util = UtilityFunction(kind=acq, kappa=kappa, xi=xi)
 
         # Initialize x, y and find current y_max
