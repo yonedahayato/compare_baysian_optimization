@@ -39,7 +39,6 @@ def main(k_num, acq):
                 "layer1": [10, 50, 100, 50], "layer2": [10, 50, 100, 50],"layer3": [10, 50, 100, 50],"layer4": [10, 50, 100, 50],"layer5": [10, 50, 100, 50] })
 
     BO.maximize(n_iter=10, acq=acq, **gp_params)
-    sys.exit()
 
     print("-"*53)
     print("Final Results")

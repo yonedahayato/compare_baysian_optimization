@@ -13,7 +13,7 @@ def main():
 
     print("-"*100)
     category = []
-    category_size=[35,15,15,15,15,15]
+    category_size=[35] + [13]*(len(result[0])-1)
 
     for i, k in enumerate(result[0].keys()):
         category.append(k)
