@@ -28,18 +28,19 @@ def grid_search(function, tuned_parameters, verbose=True):
         return Score
 
     def execute_for(index, j, Best_Score, Best_Index, verbose=False):
-        for i in range(max_index[j]): # 0
+        for i in range(max_index[j]):
             if j==0:
                 Score = execute(index, function, verbose=verbose)
                 if Best_Score < Score:
                     Best_Score = Score
                     Best_Index = index
-                index[j] += 1 # 0
+                index[j] += 1
             else:
                 index, Best_Score, Best_Index = execute_for(index, j-1, Best_Score, Best_Index, verbose=verbose)
 
-        index[j] = 0 # 0
-        index[j+1] += 1 # 1
+        index[j] = 0
+        if j+1 == len(index)+1: pass
+        else: index[j+1] += 1
 
         return index, Best_Score, Best_Index
 
