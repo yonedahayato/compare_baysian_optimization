@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from sklearn import datasets
 from sklearn.neural_network import MLPClassifier
 from sklearn.grid_search import GridSearchCV
 from b.bayesian_optimization import BayesianOptimization
@@ -10,11 +9,19 @@ from collections import OrderedDict
 from sklearn.svm import SVC
 
 
-#data
+# data difits
+"""
+from sklearn import datasets
 digits = datasets.load_digits()
 n_sample = len(digits.images)
 X = digits.images.reshape((n_sample, -1))
 y = digits.target
+"""
+# data mnist
+from sklearn.datasets import fetch_mldata
+mnist = fetch_mldata("MNIST original")
+sys.exit()
+
 
 train_size = int(n_sample*0.8)
 X_train, X_test = X[:train_size, :], X[train_size:, :]
