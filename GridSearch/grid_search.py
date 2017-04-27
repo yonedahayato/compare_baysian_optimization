@@ -9,7 +9,7 @@ def grid_search(function, tuned_parameters, verbose=True):
     for k in tuned_parameters.keys():
         key_list.append(k)
         max_index.append(len(tuned_parameters[k]))
-    print(key_list)
+    #print(key_list)
 
     def execute(index, function, verbose=True):
         # argument と function を用意して実行する #
@@ -39,7 +39,7 @@ def grid_search(function, tuned_parameters, verbose=True):
                 index, Best_Score, Best_Index = execute_for(index, j-1, Best_Score, Best_Index, verbose=verbose)
 
         index[j] = 0
-        if j+1 == len(index)+1: pass
+        if j+1 == len(index): pass
         else: index[j+1] += 1
 
         return index, Best_Score, Best_Index
@@ -51,8 +51,10 @@ def grid_search(function, tuned_parameters, verbose=True):
     index, Best_Score, Best_Index = execute_for(index, len(key_list)-1,
                                                 Best_Score, Best_Index, verbose=verbose)
 
+    print("===== Grid Search =====")
     print("Best_Score: {}".format(Best_Score))
     Best_Parameters = {}
     for i, k in enumerate(key_list):
         Best_Parameters[k] = tuned_parameters[k][Best_Index[i]]
     print(Best_Parameters)
+    print("===== ==== ====== =====")

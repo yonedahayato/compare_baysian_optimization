@@ -34,31 +34,33 @@ def MLP(alpha, lr, layer1, layer2, layer3):
 
     mlp.fit(X_train, y_train)
     #print("Test set score: {}".format(mlp.score(X_test, y_test)))
+
     return mlp.score(X_test, y_test)
 
 
 def grid_search(verbose=True):
     tuned_parameters = {"alpha": [10**i for i in range(-8, -4+1, 1)],
                         "lr": [10**i for i in range(-6, -2+1, 1)],
-                        "layer1": [10*i for i in range(1, 10+1, 1)],
-                        "layer2": [10*i for i in range(1, 10+1, 1)],
-                        "layer3": [10*i for i in range(1, 10+1, 1)]}
+                        "layer1": [10, 50, 100],
+                        "layer2": [10, 50, 100],
+                        "layer3": [10, 50, 100]}
 
     from GridSearch.grid_search import grid_search
     grid_search(MLP, tuned_parameters, verbose=verbose)
 
 
-def main(k_num, acq):
+def main(k_num, acq, verbose=True):
     gp_params = {"alpha": 1e-5}
     BO = BayesianOptimization(MLP,
                               {"alpha": (1e-8, 1e-4), "lr": (1e-6, 1e-2),
                                "layer1": (10, 100),"layer2": (10, 100),"layer3": (10, 100)},
-                              verbose=1, kernel_num = k_num)
+                              verbose=verbose, kernel_num = k_num)
 
     BO.explore({"alpha": [1e-8, 1e-8, 1e-4, 1e-4],"lr": [1e-6, 1e-2, 1e-6, 1e-2],
                 "layer1": [10, 50, 100, 50], "layer2": [10, 50, 100, 50],"layer3": [10, 50, 100, 50]})
 
-    BO.maximize(n_iter=10, acq=acq, **gp_params)
+    BO.maximize(n_iter=50, acq=acq, **gp_params)
+
 
     print("-"*53)
     print("Final Results")
@@ -68,6 +70,7 @@ def main(k_num, acq):
     print("score: {}".format(BO.res["max"]["max_val"]))
     print("best_parameter: ")
     print(BO.res["max"]["max_params"])
+    print("-"*53)
 
     final_result = OrderedDict( (("kernel", str(BO.kernel)),
                                  ("acquisition", BO.acquisition),
@@ -78,8 +81,9 @@ def main(k_num, acq):
 
 
 if __name__ == "__main__":
-    #main(0, "ucb")  # Bayesian Optimization
+
+    main(0, "ucb")  # Bayesian Optimization
                     # kernel...Matern(nu=0.5)
                     # acquisition function...ucb
 
-    grid_search(verbose=True) # 比較用の Grid Search
+    #grid_search(verbose=False) # 比較用の Grid Search
