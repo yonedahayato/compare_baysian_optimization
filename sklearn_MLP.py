@@ -8,24 +8,26 @@ import sys
 from collections import OrderedDict
 from sklearn.svm import SVC
 
-
-# data difits
 """
+# data difits
 from sklearn import datasets
 digits = datasets.load_digits()
 n_sample = len(digits.images)
 X = digits.images.reshape((n_sample, -1))
 y = digits.target
-"""
-# data mnist
-from sklearn.datasets import fetch_mldata
-mnist = fetch_mldata("MNIST original")
-sys.exit()
-
 
 train_size = int(n_sample*0.8)
 X_train, X_test = X[:train_size, :], X[train_size:, :]
 y_train, y_test = y[:train_size], y[train_size:]
+"""
+
+# data mnist
+from mnist import download_mnist, load_mnist, key_file
+download_mnist()
+X_train = load_mnist(key_file["train_img"])[8:,:]
+X_test = load_mnist(key_file["test_img"])[8:,:]
+y_train = load_mnist(key_file["train_label"], 1)[:,0]
+y_test = load_mnist(key_file["test_label"], 1)[:,0]
 
 
 def MLP(alpha, lr, layer1, layer2, layer3):
