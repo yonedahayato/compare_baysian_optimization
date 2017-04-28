@@ -50,7 +50,7 @@ def grid_search(function, tuned_parameters, verbose=True):
 
     index = [0]*len(key_list) # start index
     for_num = len(key_list)-1
-    index, Best_Score, Best_Index = execute_for(index, 1, # for_num
+    index, Best_Score, Best_Index = execute_for(index, for_num,
                                                 Best_Score, Best_Index, verbose=verbose)
 
     print(Best_Index)
