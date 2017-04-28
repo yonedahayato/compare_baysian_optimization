@@ -22,13 +22,13 @@ y_train, y_test = y[:train_size], y[train_size:]
 """
 
 # data mnist
+train_size, test_size = 6000, 1000
 from mnist import download_mnist, load_mnist, key_file
 download_mnist()
-X_train = load_mnist(key_file["train_img"])[8:,:]
-X_test = load_mnist(key_file["test_img"])[8:,:]
-y_train = load_mnist(key_file["train_label"], 1)[:,0]
-y_test = load_mnist(key_file["test_label"], 1)[:,0]
-
+X_train = load_mnist(key_file["train_img"])[8:train_size+8,:]
+X_test = load_mnist(key_file["test_img"], )[8:test_size+8,:]
+y_train = load_mnist(key_file["train_label"], 1)[:train_size,0]
+y_test = load_mnist(key_file["test_label"], 1)[:test_size,0]
 
 def MLP(alpha, lr, layer1, layer2, layer3):
     # :::hyper parameters:::
@@ -91,8 +91,8 @@ def main(k_num, acq, verbose=True):
 
 if __name__ == "__main__":
 
-    main(0, "ucb")  # Bayesian Optimization
+    #main(0, "ucb")  # Bayesian Optimization
                     # kernel...Matern(nu=0.5)
                     # acquisition function...ucb
 
-    #grid_search(verbose=False) # 比較用の Grid Search
+    grid_search(verbose=True) # 比較用の Grid Search

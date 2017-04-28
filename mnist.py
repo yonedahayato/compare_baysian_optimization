@@ -21,7 +21,7 @@ def _download(filename, verbose=False):
     if os.path.exists(file_path):
         if verbose:
             return print("alredady exist")
-        else: pass
+        else: return
     print("Downloading " + filename + " ... ")
     urllib.request.urlretrieve(url_base + filename, file_path)
     print("Done")
