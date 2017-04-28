@@ -95,6 +95,6 @@ if __name__ == "__main__":
                     # kernel...Matern(nu=0.5)
                     # acquisition function...ucb
 
-    #grid_search(verbose=False) # 比較用の Grid Search
+    grid_search(verbose=False) # 比較用の Grid Search
 
-    print(MLP(1e-8, 1e-6, 10, 10, 10)) #(alpha, lr, layer1, layer2, layer3)
+    #print(MLP(1e-8, 1e-6, 10, 10, 10)) #(alpha, lr, layer1, layer2, layer3)

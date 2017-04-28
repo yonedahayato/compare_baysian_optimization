@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import inspect
 import sys
+import copy
 
 def grid_search(function, tuned_parameters, verbose=True):
 
@@ -33,7 +34,7 @@ def grid_search(function, tuned_parameters, verbose=True):
                 Score = execute(index, function, verbose=verbose)
                 if Best_Score < Score:
                     Best_Score = Score
-                    Best_Index = index
+                    Best_Index = copy.deepcopy(index)
                 index[j] += 1
             else:
                 index, Best_Score, Best_Index = execute_for(index, j-1, Best_Score, Best_Index, verbose=verbose)
@@ -48,13 +49,16 @@ def grid_search(function, tuned_parameters, verbose=True):
     Best_Index = None
 
     index = [0]*len(key_list) # start index
-    index, Best_Score, Best_Index = execute_for(index, len(key_list)-1,
+    for_num = len(key_list)-1
+    index, Best_Score, Best_Index = execute_for(index, 1, # for_num
                                                 Best_Score, Best_Index, verbose=verbose)
 
+    print(Best_Index)
     print("===== Grid Search =====")
     print("Best_Score: {}".format(Best_Score))
     Best_Parameters = {}
     for i, k in enumerate(key_list):
         Best_Parameters[k] = tuned_parameters[k][Best_Index[i]]
+    print("Best Parameters")
     print(Best_Parameters)
     print("===== ==== ====== =====")
